@@ -2,18 +2,16 @@
 
 namespace yangpimpollo\L2_application\UseCases\Order;
 
-//use yangpimpollo\L1_domain\Repository\OrderRepositoryInterface;
+use yangpimpollo\L1_domain\Repository\OrderRepositoryInterface;
 
 class IndexOrderUseCase
 {
     public function __construct(
-        //private readonly OrderRepositoryInterface $repository
+        private readonly OrderRepositoryInterface $repository
     ) {}
 
     public function execute(string $storeId): array
     {
-        //return $this->repository->index($storeId);
-
-        return ['title' =>"index order use case" , 'store'=>"$storeId"];
+        return $this->repository->index($storeId);
     }
 }

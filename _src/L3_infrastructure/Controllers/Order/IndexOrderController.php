@@ -19,7 +19,7 @@ class IndexOrderController
      */
     public function __invoke(Request $request)
     {
-        $storeId = "sssss ";
+        $storeId = $request->user()->store_id;
         $data = $this->indexOrderUseCase->execute($storeId);
         return $this->success($data, 'lista de todas las ordenes', 200);
     }

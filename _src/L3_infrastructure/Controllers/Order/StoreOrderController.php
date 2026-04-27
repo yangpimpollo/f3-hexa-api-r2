@@ -27,10 +27,18 @@ class StoreOrderController
         //     'items.*.discount' => 'nullable|numeric|min:0',
         // ]);
 
+        // $request->validate([
+        //     'customer_dni' => 'required|string',
+        //     'items' => 'required',
+        //     'items.*.product_id' => 'required',
+        //     'items.*.quantity' => 'required',
+        //     'items.*.discount' => 'required',
+        // ]);
+
         $req = [
             'customer_dni' => $request->input('customer_dni'),
-            'store_id'     => "$request->user()->store_id",
-            'staff_id'     => "$request->user()->id",
+            'store_id'     => $request->user()->store_id,
+            'staff_id'     => $request->user()->id,
             'items'        => $request->input('items'),
         ];
 

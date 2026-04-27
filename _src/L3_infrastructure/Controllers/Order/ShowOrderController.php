@@ -19,7 +19,7 @@ class ShowOrderController
      */
     public function __invoke(Request $request)
     {
-        $orderId = "grggrd";
+        $orderId = $request->query('order_id');
         $data = $this->showOrderUseCase->execute($orderId);
         return $this->success($data, 'orden encontrada', 200);
     }

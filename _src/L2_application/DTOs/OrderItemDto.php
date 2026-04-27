@@ -26,7 +26,7 @@ class OrderItemDto
         if($data['discount'] < 0 || $data['discount'] > 1)
             throw my_form_order_Exception::invalidDiscountRange();
 
-        $this->product_id = $data['product_id'];
+        $this->productId = $data['product_id'];
         $this->quantity = $data['quantity'];
         $this->discount = $data['discount'];
     }
