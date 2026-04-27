@@ -21,10 +21,10 @@ Route::get('/hello', HelloWorldController::class);
 
 Route::prefix('auth')->group(function () {
     Route::post('/login', LoginController::class);
-    Route::post('/logout', logoutController::class);//->middleware('auth:sanctum');
+    Route::post('/logout', logoutController::class)->middleware('auth:sanctum');
 });
 
-//Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('client')->group(function () {
         Route::get('/search-customer/{id}', ShowCustomerController::class);
@@ -42,4 +42,4 @@ Route::prefix('auth')->group(function () {
         Route::delete('/delete', DeleteOrderController::class);
     });
 
-//});
+});

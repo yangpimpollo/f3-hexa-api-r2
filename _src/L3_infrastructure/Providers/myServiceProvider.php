@@ -12,11 +12,11 @@ use Dedoc\Scramble\Support\Generator\SecurityScheme;
 
 
 use yangpimpollo\L1_domain\Repository\AuthRepositoryInterface;
-// use yangpimpollo\L1_domain\Repository\CustomerRepositoryInterface;
+use yangpimpollo\L1_domain\Repository\CustomerRepositoryInterface;
 // use yangpimpollo\L1_domain\Repository\ProductRepositoryInterface;
 // use yangpimpollo\L1_domain\Repository\OrderRepositoryInterface;
 use yangpimpollo\L3_infrastructure\Persistence\Auth\EloquentAuth;
-// use yangpimpollo\L3_infrastructure\Persistence\Customer\EloquentCustomer;
+use yangpimpollo\L3_infrastructure\Persistence\Customer\EloquentCustomer;
 // use yangpimpollo\L3_infrastructure\Persistence\Product\EloquentSearchProduct;
 // use yangpimpollo\L3_infrastructure\Persistence\Order\EloquentOrder;
 
@@ -26,7 +26,7 @@ class myServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(AuthRepositoryInterface::class, EloquentAuth::class);
-        // $this->app->bind(CustomerRepositoryInterface::class, EloquentCustomer::class);
+        $this->app->bind(CustomerRepositoryInterface::class, EloquentCustomer::class);
         // $this->app->bind(ProductRepositoryInterface::class, EloquentSearchProduct::class);
         // $this->app->bind(OrderRepositoryInterface::class, EloquentOrder::class);
     }

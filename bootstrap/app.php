@@ -10,6 +10,9 @@ use yangpimpollo\L2_application\FormExceptions\my_form_customer_Exception;
 use yangpimpollo\L2_application\FormExceptions\my_form_order_Exception;
 
 use yangpimpollo\L1_domain\DomainExceptions\my_login_error_Exception;
+use yangpimpollo\L1_domain\DomainExceptions\my_customer_Exception;
+use yangpimpollo\L1_domain\DomainExceptions\my_order_Exception;
+use yangpimpollo\L1_domain\DomainExceptions\my_product_Exception;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -48,6 +51,27 @@ return Application::configure(basePath: dirname(__DIR__))
 
 
         $exceptions->render(function (my_login_error_Exception $e) {
+            return response()->json([
+                'status' => '🐦 error_de_dominio',
+                'mensaje' => $e->getMessage()
+            ], 400);
+        });
+
+        $exceptions->render(function (my_customer_Exception $e) {
+            return response()->json([
+                'status' => '🐦 error_de_dominio',
+                'mensaje' => $e->getMessage()
+            ], 400);
+        });
+
+        $exceptions->render(function (my_product_Exception $e) {
+            return response()->json([
+                'status' => '🐦 error_de_dominio',
+                'mensaje' => $e->getMessage()
+            ], 400);
+        });
+
+        $exceptions->render(function (my_order_Exception $e) {
             return response()->json([
                 'status' => '🐦 error_de_dominio',
                 'mensaje' => $e->getMessage()

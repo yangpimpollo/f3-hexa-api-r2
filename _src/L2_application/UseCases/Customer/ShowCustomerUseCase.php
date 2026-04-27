@@ -2,10 +2,8 @@
 
 namespace yangpimpollo\L2_application\UseCases\Customer;
 
-//use yangpimpollo\L1_domain\Exceptions\my_customer_Exception;
+use yangpimpollo\L1_domain\DomainExceptions\my_customer_Exception;
 use yangpimpollo\L1_domain\Repository\CustomerRepositoryInterface;
-//use yangpimpollo\L1_domain\ValueObjects\dni;
-//use yangpimpollo\L1_domain\Entity\Customer;
 
 class ShowCustomerUseCase
 {
@@ -15,11 +13,19 @@ class ShowCustomerUseCase
 
     public function execute(string $dniValue): array
     {
-        $value = ['name'=>"clint",'dee'=>"use case show",'dni'=>$dniValue];
-        //$value = $this->repository->show(new dni($dniValue));
+        /*---------------PARCHE  se arreglara despues--------------------*/
 
-        //if ($value == null) throw my_customer_Exception::customer_not_found();
+        if (!ctype_digit($dniValue) || strlen($dniValue) !== 8) 
+            throw \yangpimpollo\L2_application\FormExceptions\my_form_customer_Exception::dni_error();
 
-        return $value;
+
+        //------------------------------------------------------------//
+
+
+        $value = $this->repository->show($dniValue);
+
+        if ($value == null) throw my_customer_Exception::customer_not_found();
+
+        return $value->toArray();
     }
 }

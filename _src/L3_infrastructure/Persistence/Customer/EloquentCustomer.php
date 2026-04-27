@@ -1,0 +1,27 @@
+<?php
+
+namespace yangpimpollo\L3_infrastructure\Persistence\Customer;
+
+
+use yangpimpollo\L1_domain\Entity\Customer;
+use yangpimpollo\L1_domain\Repository\CustomerRepositoryInterface;
+
+class EloquentCustomer implements CustomerRepositoryInterface
+{
+    public function __construct(
+        private ShowCustomer $showCustomer,
+        private StoreCustomer $storeCustomer
+    ) {}
+
+    public function show(string $dni): ?Customer
+    {
+        return $this->showCustomer->execute($dni);
+    }
+
+    public function store(Customer $customer): array
+    {
+        return $this->storeCustomer->execute($customer);
+    }
+
+    
+}
