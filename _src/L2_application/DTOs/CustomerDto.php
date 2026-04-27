@@ -15,7 +15,7 @@ class CustomerDto
     {
         $fields = ['dni', 'firstname', 'lastname', 'phone'];
 
-        // 1. Validar que las llaves existan y sean strings
+        // 1. Validar que existan y sean strings
         foreach ($fields as $field) {
             if (!isset($data[$field]) || !is_string($data[$field])) 
                 throw my_form_customer_Exception::filled_out_incorrectly();

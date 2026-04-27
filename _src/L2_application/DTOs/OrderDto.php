@@ -2,26 +2,44 @@
 
 namespace yangpimpollo\L2_application\DTOs;
 
-use yangpimpollo\L2_application\FormExceptions\my_form_order_and_orderitem_Exception;
+use yangpimpollo\L2_application\DTOs\OrderItemDto;
+use yangpimpollo\L2_application\FormExceptions\my_form_order_Exception;
 
 class OrderDto
 {
-    public readonly string $username;
-    public readonly string $password;
+    public readonly string $customer_dni;
+    public readonly string $store_id;
+    public readonly string $staff_id;
+    public readonly array $items;
 
     public function __construct(array $data)
     {
-        // 1. Validar que las llaves existan y sean strings
-        if (!isset($data['username']) || !is_string($data['username'])) 
-            throw my_form_login_Exception::filled_out_incorrectly();
+        $fields = ['customer_dni', 'store_id', 'staff_id'];
 
-        if (!isset($data['password']) || !is_string($data['password'])) 
-           throw my_form_login_Exception::filled_out_incorrectly();
+        // 1. Validar que existan y sean strings
+        foreach ($fields as $field) {
+            if (!isset($data[$field]) || !is_string($data[$field])) 
+                throw my_form_order_Exception::filled_out_incorrectly();
+        }
+
+        if (!ctype_digit($data['customer_dni']) || strlen($data['customer_dni']) !== 8) 
+            throw my_form_order_Exception::dni_error();
+
+
+        if (!isset($data['items']) || !is_array($data['items']) || count($data['items']) === 0) 
+            throw my_form_order_Exception::zero_items();
         
 
-        // 2. Asignar valores
-        $this->username = $data['username'];
-        $this->password = $data['password'];
+        $items = [];
+
+        foreach ($data['items'] as $item) {
+            $items[] = new OrderItemDto($item);
+        }
+
+        $this->customer_dni = $data['customer_dni'];
+        $this->store_id = $data['store_id'];
+        $this->staff_id = $data['staff_id'];
+        $this->items = $items; 
     }
 
 }

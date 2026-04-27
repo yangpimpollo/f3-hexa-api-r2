@@ -7,7 +7,9 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 use yangpimpollo\L2_application\FormExceptions\my_form_login_Exception;
 use yangpimpollo\L2_application\FormExceptions\my_form_customer_Exception;
+use yangpimpollo\L2_application\FormExceptions\my_form_order_Exception;
 
+use yangpimpollo\L1_domain\DomainExceptions\my_login_error_Exception;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -20,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+
         $exceptions->render(function (my_form_login_Exception $e) {
             return response()->json([
                 'status' => '🍔 error_de_formulario',
@@ -34,7 +37,22 @@ return Application::configure(basePath: dirname(__DIR__))
             ], 400);
         });
 
+        $exceptions->render(function (my_form_order_Exception $e) {
+            return response()->json([
+                'status' => '🍔 error_de_formulario',
+                'mensaje' => $e->getMessage()
+            ], 400);
+        });
 
+//-------------------------------------------------------------------------------
+
+
+        $exceptions->render(function (my_login_error_Exception $e) {
+            return response()->json([
+                'status' => '🐦 error_de_dominio',
+                'mensaje' => $e->getMessage()
+            ], 400);
+        });
 
 
     })->create();

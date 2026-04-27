@@ -5,25 +5,26 @@ namespace yangpimpollo\L3_infrastructure\Controllers\Customer;
 use Illuminate\Http\Request;
 
 use yangpimpollo\L2_application\DTOs\CustomerDto;
+use yangpimpollo\L2_application\UseCases\Customer\StoreCustomerUseCase;
 use yangpimpollo\L3_infrastructure\Traits\ApiResponse;
 
 
 class StoreCustomerController
 {
     use ApiResponse;
-    public function __construct() {}
+    public function __construct( private StoreCustomerUseCase $storeCustomerUseCase ) {}
 
     /**
      * Guardar nuevo cliente
      */
     public function __invoke(Request $request)
     {
-        $request->validate([
-            'dni'       => 'required|string',
-            'firstname' => 'required|string',
-            'lastname'  => 'required|string',
-            'phone'     => 'required|string',
-        ]);
+        // $request->validate([
+        //     'dni'       => 'required|string',
+        //     'firstname' => 'required|string',
+        //     'lastname'  => 'required|string',
+        //     'phone'     => 'required|string',
+        // ]);
 
         $req = [
             'dni'       => $request->input('dni'),
@@ -34,7 +35,7 @@ class StoreCustomerController
 
         $dto = new CustomerDto( $req );
 
-        $data = null;
-        return $this->success($req, 'ruta verificada', 200);
+        $data =  $this->storeCustomerUseCase->execute($dto);
+        return $this->success($data, '¡Cliente guardado correctamente! 🏎️', 201);
     }
 }
